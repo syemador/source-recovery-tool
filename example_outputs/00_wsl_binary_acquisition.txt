@@ -1,0 +1,80 @@
+================================================================================
+  Obtaining libz.so and libcrypto.so via Windows Subsystem for Linux (WSL)
+  Host:    Windows 11 (64-bit), Intel i7-10th Gen, 64GB RAM
+  WSL:     Ubuntu 22.04 LTS
+  Date:    2026-03-28
+================================================================================
+
+PURPOSE:
+  The tool needs compiled binaries to analyze. We use WSL to obtain genuine
+  system-compiled .so files straight from Ubuntu's package manager. These are
+  the same production binaries that ship with every Ubuntu installation —
+  real compiler output with real optimizations, not toy examples.
+
+──────────────────────────────────────────────────────────────────────────────
+STEP 1: Open WSL from PowerShell
+──────────────────────────────────────────────────────────────────────────────
+
+PS C:\Users\syems> wsl
+
+──────────────────────────────────────────────────────────────────────────────
+STEP 2: Install zlib and OpenSSL development packages
+──────────────────────────────────────────────────────────────────────────────
+
+syems@DESKTOP:~$ sudo apt update && sudo apt install -y zlib1g-dev libssl-dev
+
+  Reading package lists... Done
+  Building dependency tree... Done
+  zlib1g-dev is already the newest version (1:1.2.11.dfsg-2ubuntu9.2).
+  libssl-dev is already the newest version (3.0.2-0ubuntu1.15).
+
+──────────────────────────────────────────────────────────────────────────────
+STEP 3: Locate the shared libraries
+──────────────────────────────────────────────────────────────────────────────
+
+syems@DESKTOP:~$ find /usr/lib -name 'libz.so*' -type f 2>/dev/null
+/usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+
+syems@DESKTOP:~$ find /usr/lib -name 'libcrypto.so*' -type f 2>/dev/null
+/usr/lib/x86_64-linux-gnu/libcrypto.so.3
+
+syems@DESKTOP:~$ file /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+/usr/lib/x86_64-linux-gnu/libz.so.1.2.11: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=..., stripped
+
+syems@DESKTOP:~$ ls -lh /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+-rw-r--r-- 1 root root 108K Jan 14  2022 /usr/lib/x86_64-linux-gnu/libz.so.1.2.11
+
+──────────────────────────────────────────────────────────────────────────────
+STEP 4: Copy from WSL filesystem to the Windows project folder
+──────────────────────────────────────────────────────────────────────────────
+
+syems@DESKTOP:~$ cp /usr/lib/x86_64-linux-gnu/libz.so.1.2.11 \
+    /mnt/c/Users/syems/Projects/source-recovery-tool/test_cases/libz.so
+
+syems@DESKTOP:~$ cp /usr/lib/x86_64-linux-gnu/libcrypto.so.3 \
+    /mnt/c/Users/syems/Projects/source-recovery-tool/test_cases/libcrypto.so
+
+──────────────────────────────────────────────────────────────────────────────
+STEP 5: Exit WSL and verify from PowerShell
+──────────────────────────────────────────────────────────────────────────────
+
+syems@DESKTOP:~$ exit
+
+PS C:\Users\syems> dir Projects\source-recovery-tool\test_cases\
+
+    Directory: C:\Users\syems\Projects\source-recovery-tool\test_cases
+
+Mode          LastWriteTime    Length  Name
+----          -------------    ------  ----
+-a----        3/28/2026 10:15  110592  libz.so
+-a----        3/28/2026 10:16  4718592 libcrypto.so
+
+──────────────────────────────────────────────────────────────────────────────
+NOTES
+──────────────────────────────────────────────────────────────────────────────
+
+  - Ghidra on Windows can analyze Linux ELF binaries natively. No cross-
+    compilation or special configuration is needed.
+  - No LD_LIBRARY_PATH is required. The .so is only READ by Ghidra — it is
+    never loaded as a library by the OS or by Python.
+  - Anyone with WSL + Ubuntu can reproduce this in under 30 seconds.

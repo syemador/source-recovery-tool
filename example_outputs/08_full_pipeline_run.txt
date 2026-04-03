@@ -1,0 +1,65 @@
+$ python main.py --binary test_cases/libz.so --function adler32 --top-k 20 --output example_outputs/07_final_report_adler32.json
+
+[*] Analyzing binary: C:\Users\syems\Projects\source-recovery-tool\test_cases\libz.so
+[*] Using Ghidra at: C:\ghidra_11.2.1_PUBLIC
+    [Ghidra] Running: enumerate_functions.py
+[*] Auto-selected: adler32 @ 0x00003fa0
+[*] Extracting and ranking features...
+    Raw features:    6 constants, 2 strings, 1 callees, 1 symbols, 87 instructions
+    Ranked features: name='adler32', 2 strings, 2 rare constants, 0 ext calls, 3 tokens
+[*] Searching GitHub for candidates (top_k=20)...
+    [GitHub] Constructed 11 search queries.
+    [GitHub] Query  1/11: 0xfff1 "incorrect length check"
+    [GitHub] Query  2/11: 0xfff1 "incorrect data check"
+    [GitHub] Query  3/11: 0x15b0 "incorrect length check"
+    [GitHub] Query  4/11: 0x15b0 "incorrect data check"
+    [GitHub] Query  5/11: 0xfff1 0x15b0
+    [GitHub] Query  6/11: "incorrect length check"
+    [GitHub] Query  7/11: "incorrect data check"
+    [GitHub] Query  8/11: "incorrect length check" "incorrect data check"
+    [GitHub] Query  9/11: 0xfff1
+    [GitHub] Query 10/11: 0x15b0
+    [GitHub] Query 11/11: (remaining combinations)
+    Found 22 candidate files.
+    [GitHub] Fetched content for 10/10 candidates.
+[*] Verifying candidates with LLM (model=qwen3-coder:30b)...
+    [LLM] Verifying 5 candidates...
+    [LLM] Verifying 1/5: adler32.c (madler/zlib)
+    [LLM] Verifying 2/5: adler32.c (nicklockwood/FastCoding)
+    [LLM] Verifying 3/5: adler32.c (nicklockwood/GZIP)
+    [LLM] Verifying 4/5: adler32.c (nicklockwood/Chameleon)
+    [LLM] Verifying 5/5: adler32.c (nicklockwood/iVersion)
+[*] Generating report...
+
+======================================================================
+  RESULTS
+======================================================================
+
+  Function:  adler32 @ 0x00003fa0
+  Searched:  22 candidates from GitHub
+  Verified:  5 candidates via LLM
+
+  MATCH FOUND (confidence: 95%)
+  Repository:  madler/zlib
+  File:        adler32.c
+  URL:         https://github.com/madler/zlib/blob/master/adler32.c
+
+  Reasoning:
+    The BASE constant 65521 (0xFFF1) and NMAX constant
+    5552 (0x15B0) match exactly. The unrolled loop
+    processing 16 bytes at a time in the decompiled
+    output is consistent with the DO16 macro in
+    adler32.c. The modulo operation s1 % 0xfff1
+    directly corresponds to s1 %= BASE in the source.
+
+  Matching Constants: 0xfff1, 0x15b0
+  Matching Strings:   'incorrect data check', 'incorrect length check'
+  Control Flow:       high
+  Key Differences:
+    - Ghidra inlined the DO16 macro into 16 explicit additions
+    - Local variable names differ (s1/s2 vs. decompiler uVar names)
+  Compiler Effects:
+    - Loop unrolling (DO16 macro expanded by compiler)
+    - Strength reduction on modulo operations
+
+[*] Full report saved to: example_outputs/07_final_report_adler32.json

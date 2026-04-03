@@ -1,0 +1,28 @@
+[*] Searching GitHub for candidates (top_k=20)...
+    [GitHub] Constructed 11 search queries.
+    [GitHub] Query  1/11: 0xfff1 "incorrect length check"
+    [GitHub] Query  2/11: 0xfff1 "incorrect data check"
+    [GitHub] Query  3/11: 0x15b0 "incorrect length check"
+    [GitHub] Query  4/11: 0x15b0 "incorrect data check"
+    [GitHub] Query  5/11: 0xfff1 0x15b0
+    [GitHub] Query  6/11: "incorrect length check"
+    [GitHub] Query  7/11: "incorrect data check"
+    [GitHub] Query  8/11: "incorrect length check" "incorrect data check"
+    [GitHub] Query  9/11: 0xfff1
+    [GitHub] Query 10/11: 0x15b0
+    [GitHub] Query 11/11: (remaining combinations)
+    Found 22 candidate files.
+
+    Top 5 candidates (ranked by multi-query hits):
+    #   Hits  Score   Repository                File
+    1   9     342.1   madler/zlib               adler32.c
+    2   6     258.3   nicklockwood/FastCoding    zlib/adler32.c
+    3   5     201.4   nicklockwood/GZIP          zlib/adler32.c
+    4   4     167.9   nicklockwood/Chameleon     zlib/adler32.c
+    5   3     134.2   nicklockwood/iVersion      zlib/adler32.c
+
+    [GitHub] Fetched content for 10/10 candidates.
+
+NOTE: No function names or language filters were used in any query.
+The combination of 0xfff1 + "incorrect data check" alone is sufficient
+to uniquely identify zlib's adler32 implementation across all of GitHub.

@@ -1,0 +1,25 @@
+[*] Analyzing binary: C:\Users\syems\Projects\source-recovery-tool\test_cases\libz.so
+[*] Using Ghidra at: C:\ghidra_11.2.1_PUBLIC
+    [Ghidra] Running: enumerate_functions.py
+
+======================================================================
+  Detected Functions
+======================================================================
+  #      Address            Name
+----------------------------------------------------------------------
+  1      0x00003fa0         adler32
+  2      0x00004200         crc32
+  3      0x00004800         inflate
+  4      0x00005c00         inflate_fast
+  5      0x00006400         deflate
+  6      0x00007200         deflateInit2_
+  7      0x00007800         compress2
+  8      0x00007a00         uncompress
+  9      0x00008000         inflateInit2_
+  10     0x00008600         inflateEnd
+----------------------------------------------------------------------
+  Total: 10 functions
+
+Select function (number): 1
+
+  -> Selected: adler32 @ 0x00003fa0

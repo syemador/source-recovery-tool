@@ -1,0 +1,28 @@
+[*] Loading Ghidra output: /home/claude/source_recovery/examples/zlib_ghidra_output.json
+[*] Found 10 functions.
+
+[*] Analyzing: adler32 @ 0x00003fa0
+    Size: 312 bytes
+
+[*] Step 1: Feature Extraction
+    6 constants, 2 strings, 1 callees, 1 symbols, 87 instructions
+
+[*] Step 2: Feature Ranking
+    name='adler32', 2 strings, 2 rare constants, 0 ext calls, 3 tokens
+
+    Search terms (priority order):
+      1. incorrect length check
+      2. incorrect data check
+      3. 0xfff1
+      4. 0x15b0
+
+    Unique strings (scored):
+      [2.8] 'incorrect length check'
+      [2.7] 'incorrect data check'
+
+    Rare constants (scored):
+      [1.5] 0xfff1 (65521)
+      [1.5] 0x15b0 (5552)
+
+[*] Offline mode — skipping GitHub search and LLM verification.
+[*] Done.

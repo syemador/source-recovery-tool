@@ -1,0 +1,29 @@
+[*] Verifying candidates with LLM (model=qwen3-coder:30b)...
+    [LLM] Verifying 5 candidates...
+    [LLM] Verifying 1/5: adler32.c (madler/zlib)
+    [LLM] Verifying 2/5: adler32.c (nicklockwood/FastCoding)
+    [LLM] Verifying 3/5: adler32.c (nicklockwood/GZIP)
+    [LLM] Verifying 4/5: adler32.c (nicklockwood/Chameleon)
+    [LLM] Verifying 5/5: adler32.c (nicklockwood/iVersion)
+
+─── Best Candidate: madler/zlib — adler32.c ────────────────────────────────
+
+LLM JSON Response:
+{
+    "is_match": true,
+    "confidence": 0.95,
+    "reasoning": "The decompiled function is a near-exact match for the adler32() function in zlib. The BASE constant 65521 (0xFFF1) — the largest prime smaller than 65536 — appears as the modulo operand in both the decompiled code (s1 % 0xfff1) and the source (#define BASE 65521). The NMAX constant 5552 (0x15B0) — the largest n such that 255n(n+1)/2 + (n+1)(BASE-1) <= 2^32-1 — matches the loop bound in both versions. The unrolled inner loop processing 16 bytes at a time in the decompiled output corresponds to the DO16(buf) macro in the source.",
+    "matching_constants": ["0xfff1 (65521 = BASE)", "0x15b0 (5552 = NMAX)"],
+    "matching_strings": ["incorrect data check", "incorrect length check"],
+    "control_flow_similarity": "high",
+    "key_differences": [
+        "Ghidra expanded the DO16 macro into 16 explicit s1 += buf[N]; s2 += s1; sequences",
+        "Local variable names differ: source uses 'adler' and casts, decompiler uses s1/s2/k",
+        "Return value construction: source uses (s2 << 16) + s1, decompiler shows s2 << 0x10 | s1"
+    ],
+    "compiler_effects": [
+        "Loop unrolling: DO16 macro fully expanded into 16 inline additions",
+        "Strength reduction: compiler may optimize modulo by BASE into multiply-and-shift",
+        "Type widening: ulong casts in decompiler reflect compiler's register allocation"
+    ]
+}

@@ -1,0 +1,135 @@
+{
+    "binary": "/path/to/libcrypto.so",
+    "total_functions": 4200,
+    "displayed_functions": 3100,
+    "functions": [
+        {
+            "address": "0x000a1f40",
+            "name": "SHA256_Init",
+            "size": 92,
+            "is_thunk": false,
+            "is_external": false,
+            "constants": [
+                {"value": 1779033703, "hex": "0x6a09e667", "address": "0x000a1f48"},
+                {"value": 3144134277, "hex": "0xbb67ae85", "address": "0x000a1f50"},
+                {"value": 1013904242, "hex": "0x3c6ef372", "address": "0x000a1f58"},
+                {"value": 2773480762, "hex": "0xa54ff53a", "address": "0x000a1f60"},
+                {"value": 1359893119, "hex": "0x510e527f", "address": "0x000a1f68"},
+                {"value": 2600822924, "hex": "0x9b05688c", "address": "0x000a1f70"},
+                {"value": 528734635,  "hex": "0x1f83d9ab", "address": "0x000a1f78"},
+                {"value": 1541459225, "hex": "0x5be0cd19", "address": "0x000a1f80"},
+                {"value": 0,          "hex": "0x0",        "address": "0x000a1f84"},
+                {"value": 32,         "hex": "0x20",       "address": "0x000a1f88"},
+                {"value": 64,         "hex": "0x40",       "address": "0x000a1f8c"}
+            ],
+            "strings": [],
+            "called_functions": [
+                {"name": "memset", "address": "0x00020100", "is_thunk": true, "is_external": true}
+            ],
+            "control_flow": {
+                "instruction_count": 24,
+                "branch_count": 0,
+                "call_count": 1,
+                "conditional_branch_count": 0,
+                "return_count": 1,
+                "mnemonic_histogram": {
+                    "mov": 12, "xor": 1, "call": 1, "ret": 1, "push": 2,
+                    "pop": 2, "lea": 3, "sub": 1, "add": 1
+                }
+            },
+            "decompiler": {
+                "raw_c": "int SHA256_Init(SHA256_CTX *c)\n{\n  memset(c, 0, 0x70);\n  c->h[0] = 0x6a09e667;\n  c->h[1] = 0xbb67ae85;\n  c->h[2] = 0x3c6ef372;\n  c->h[3] = 0xa54ff53a;\n  c->h[4] = 0x510e527f;\n  c->h[5] = 0x9b05688c;\n  c->h[6] = 0x1f83d9ab;\n  c->h[7] = 0x5be0cd19;\n  c->md_len = 0x20;\n  return 1;\n}",
+                "tokens": ["int", "SHA256_Init", "SHA256_CTX", "memset", "0x6a09e667", "0xbb67ae85", "0x3c6ef372", "0xa54ff53a", "0x510e527f", "0x9b05688c", "0x1f83d9ab", "0x5be0cd19", "md_len", "0x20"]
+            },
+            "referenced_symbols": [
+                {"name": "memset", "address": "0x00020100", "type": "Function"}
+            ]
+        },
+        {
+            "address": "0x000a2040",
+            "name": "SHA256_Update",
+            "size": 620,
+            "is_thunk": false,
+            "is_external": false,
+            "constants": [
+                {"value": 64, "hex": "0x40", "address": "0x000a2060"},
+                {"value": 63, "hex": "0x3f", "address": "0x000a2068"},
+                {"value": 0,  "hex": "0x0",  "address": "0x000a2070"}
+            ],
+            "strings": [],
+            "called_functions": [
+                {"name": "sha256_block_data_order", "address": "0x000a3000", "is_thunk": false, "is_external": false},
+                {"name": "memcpy", "address": "0x00020200", "is_thunk": true, "is_external": true}
+            ],
+            "control_flow": {
+                "instruction_count": 148,
+                "branch_count": 8,
+                "call_count": 3,
+                "conditional_branch_count": 5,
+                "return_count": 1,
+                "mnemonic_histogram": {}
+            },
+            "decompiler": {
+                "raw_c": "",
+                "tokens": []
+            },
+            "referenced_symbols": []
+        },
+        {
+            "address": "0x000a2400",
+            "name": "SHA256_Final",
+            "size": 340,
+            "is_thunk": false,
+            "is_external": false
+        },
+        {
+            "address": "0x000a2600",
+            "name": "SHA1_Init",
+            "size": 76,
+            "is_thunk": false,
+            "is_external": false,
+            "constants": [
+                {"value": 1732584193, "hex": "0x67452301", "address": "0x000a2608"},
+                {"value": 4023233417, "hex": "0xefcdab89", "address": "0x000a2610"},
+                {"value": 2562383102, "hex": "0x98badcfe", "address": "0x000a2618"},
+                {"value": 271733878,  "hex": "0x10325476", "address": "0x000a2620"},
+                {"value": 3285377520, "hex": "0xc3d2e1f0", "address": "0x000a2628"},
+                {"value": 0,          "hex": "0x0",        "address": "0x000a2630"},
+                {"value": 20,         "hex": "0x14",       "address": "0x000a2634"}
+            ],
+            "strings": [],
+            "called_functions": [
+                {"name": "memset", "address": "0x00020100", "is_thunk": true, "is_external": true}
+            ],
+            "control_flow": {
+                "instruction_count": 20,
+                "branch_count": 0,
+                "call_count": 1,
+                "conditional_branch_count": 0,
+                "return_count": 1,
+                "mnemonic_histogram": {}
+            },
+            "decompiler": {
+                "raw_c": "int SHA1_Init(SHA_CTX *c)\n{\n  memset(c, 0, 0x60);\n  c->h0 = 0x67452301;\n  c->h1 = 0xefcdab89;\n  c->h2 = 0x98badcfe;\n  c->h3 = 0x10325476;\n  c->h4 = 0xc3d2e1f0;\n  c->md_len = 0x14;\n  return 1;\n}",
+                "tokens": ["int", "SHA1_Init", "SHA_CTX", "memset", "0x67452301", "0xefcdab89", "0x98badcfe", "0x10325476", "0xc3d2e1f0", "md_len", "0x14"]
+            },
+            "referenced_symbols": [
+                {"name": "memset", "address": "0x00020100", "type": "Function"}
+            ]
+        },
+        {
+            "address": "0x000b1000",
+            "name": "EVP_EncryptInit_ex",
+            "size": 480,
+            "is_thunk": false,
+            "is_external": false
+        },
+        {
+            "address": "0x000b2000",
+            "name": "AES_set_encrypt_key",
+            "size": 1240,
+            "is_thunk": false,
+            "is_external": false
+        }
+    ]
+}

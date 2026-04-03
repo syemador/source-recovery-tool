@@ -1,0 +1,31 @@
+[*] Loading Ghidra output: examples/openssl_ghidra_output.json
+[*] Found 6 functions.
+
+[*] Analyzing: SHA256_Init @ 0x000a1f40
+    Size: 92 bytes
+
+[*] Step 1: Feature Extraction
+    11 constants, 0 strings, 1 callees, 1 symbols, 24 instructions
+
+[*] Step 2: Feature Ranking
+    name='SHA256_Init', 0 strings, 8 rare constants, 1 ext calls, 4 tokens
+
+    Search terms (priority order):
+      1. 0x6a09e667
+      2. 0xbb67ae85
+      3. 0x3c6ef372
+      4. 0xa54ff53a
+      5. 0x510e527f
+      6. memset
+
+    Unique strings (scored):
+
+    Rare constants (scored):
+      [8.0] 0x6a09e667 (1779033703)
+      [8.0] 0xbb67ae85 (3144134277)
+      [8.0] 0x3c6ef372 (1013904242)
+      [8.0] 0xa54ff53a (2773480762)
+      [3.0] 0x510e527f (1359893119)
+
+[*] Offline mode — skipping GitHub search and LLM verification.
+[*] Done.

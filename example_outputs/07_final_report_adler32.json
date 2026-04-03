@@ -1,0 +1,81 @@
+{
+  "summary": "\n  Function:  adler32 @ 0x00003fa0\n  Searched:  18 candidates from GitHub\n  Verified:  5 candidates via LLM\n\n  MATCH FOUND (confidence: 95%)\n  Repository:  madler/zlib\n  File:        adler32.c\n  URL:         https://github.com/madler/zlib/blob/master/adler32.c\n\n  Reasoning:\n    The BASE constant 65521 (0xFFF1) and NMAX constant\n    5552 (0x15B0) match exactly. The unrolled loop\n    processing 16 bytes at a time in the decompiled\n    output is consistent with the DO16 macro in\n    adler32.c. The modulo operation s1 % 0xfff1\n    directly corresponds to s1 %= BASE in the source.\n\n  Matching Constants: 0xfff1, 0x15b0\n  Matching Strings:   'incorrect data check', 'incorrect length check'\n  Control Flow:       high\n  Key Differences:\n    - Ghidra inlined the DO16 macro into 16 explicit additions\n    - Local variable names differ (s1/s2 vs. decompiler uVar names)\n  Compiler Effects:\n    - Loop unrolling (DO16 macro expanded by compiler)\n    - Strength reduction on modulo operations\n",
+  "function": {
+    "name": "adler32",
+    "address": "0x00003fa0"
+  },
+  "features_used": {
+    "function_name": "adler32",
+    "function_address": "0x00003fa0",
+    "clean_function_name": "adler32",
+    "unique_strings": [
+      {"value": "incorrect length check", "score": 2.8},
+      {"value": "incorrect data check", "score": 2.7}
+    ],
+    "rare_constants": [
+      {"value": 65521, "hex": "0xfff1", "score": 1.5},
+      {"value": 5552, "hex": "0x15b0", "score": 1.5}
+    ],
+    "external_calls": [],
+    "meaningful_symbols": [],
+    "distinctive_tokens": ["adler32", "adler32_combine_", "ulong"],
+    "decompiled_code": "ulong adler32(ulong adler, byte *buf, uint len)\n{\n  ulong s1;\n  ulong s2;\n  uint k;\n  \n  if (buf == (byte *)0x0) {\n    return 1;\n  }\n  s1 = adler & 0xffff;\n  s2 = (adler >> 0x10) & 0xffff;\n  while (len != 0) {\n    if (len < 0x15b0) {\n      k = len;\n    }\n    else {\n      k = 0x15b0;\n    }\n    len = len - k;\n    while (k >= 0x10) {\n      s1 = s1 + (ulong)*buf;\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[1];\n      s2 = s2 + s1;\n      ... [16 additions total] ...\n      buf = buf + 0x10;\n      k = k - 0x10;\n    }\n    while (k != 0) {\n      s1 = s1 + (ulong)*buf;\n      s2 = s2 + s1;\n      buf = buf + 1;\n      k = k - 1;\n    }\n    s1 = s1 % 0xfff1;\n    s2 = s2 % 0xfff1;\n  }\n  return s2 << 0x10 | s1;\n}",
+    "control_flow_summary": {
+      "instruction_count": 87,
+      "branch_count": 12,
+      "call_count": 1,
+      "conditional_branches": 8
+    },
+    "all_callees": ["adler32_combine_"]
+  },
+  "search_results": {
+    "total_candidates": 18,
+    "top_candidates": [
+      {
+        "html_url": "https://github.com/madler/zlib/blob/master/adler32.c",
+        "repo": "madler/zlib",
+        "file_path": "adler32.c",
+        "score": 312.4,
+        "query_hits": 7,
+        "matched_queries": [
+          "\"adler32\" language:c",
+          "\"adler32\" \"incorrect length check\" language:c",
+          "\"adler32\" 0xfff1 language:c",
+          "\"incorrect length check\" language:c",
+          "\"incorrect data check\" language:c",
+          "0xfff1 language:c",
+          "0xfff1 \"incorrect length check\" language:c"
+        ]
+      }
+    ]
+  },
+  "verification_results": [
+    {
+      "candidate_url": "https://github.com/madler/zlib/blob/master/adler32.c",
+      "candidate_repo": "madler/zlib",
+      "candidate_path": "adler32.c",
+      "is_match": true,
+      "confidence": 0.95,
+      "reasoning": "The BASE constant 65521 (0xFFF1) and NMAX constant 5552 (0x15B0) match exactly. The unrolled loop processing 16 bytes at a time in the decompiled output is consistent with the DO16 macro in adler32.c.",
+      "matching_constants": ["0xfff1 (65521 = BASE)", "0x15b0 (5552 = NMAX)"],
+      "matching_strings": ["incorrect data check", "incorrect length check"],
+      "control_flow_similarity": "high",
+      "key_differences": [
+        "Ghidra expanded the DO16 macro into 16 explicit additions",
+        "Local variable names differ (s1/s2 vs. decompiler uVar names)"
+      ],
+      "compiler_effects": [
+        "Loop unrolling (DO16 macro expanded by compiler)",
+        "Strength reduction on modulo operations"
+      ],
+      "error": ""
+    }
+  ],
+  "best_match": {
+    "candidate_url": "https://github.com/madler/zlib/blob/master/adler32.c",
+    "candidate_repo": "madler/zlib",
+    "candidate_path": "adler32.c",
+    "is_match": true,
+    "confidence": 0.95
+  }
+}

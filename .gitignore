@@ -1,0 +1,27 @@
+# Config with secrets
+config.json
+
+# Ghidra projects
+ghidra_projects/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Test outputs
+examples/test_report.json
+
+# Binaries
+*.so
+*.dll
+*.exe
+*.dylib
+*.o
+*.a

@@ -1,0 +1,112 @@
+{
+    "binary": "/path/to/libz.so",
+    "total_functions": 120,
+    "displayed_functions": 85,
+    "functions": [
+        {
+            "address": "0x00003fa0",
+            "name": "adler32",
+            "size": 312,
+            "is_thunk": false,
+            "is_external": false,
+            "constants": [
+                {"value": 65521, "hex": "0xfff1", "address": "0x00003fb8"},
+                {"value": 5552, "hex": "0x15b0", "address": "0x00003fc4"},
+                {"value": 16, "hex": "0x10", "address": "0x00003fd0"},
+                {"value": 65536, "hex": "0x10000", "address": "0x00003fd8"},
+                {"value": 1, "hex": "0x1", "address": "0x00003fe0"},
+                {"value": 0, "hex": "0x0", "address": "0x00003fe4"}
+            ],
+            "strings": [
+                {"value": "incorrect data check", "address": "0x0000a120"},
+                {"value": "incorrect length check", "address": "0x0000a140"}
+            ],
+            "called_functions": [
+                {"name": "adler32_combine_", "address": "0x00004100", "is_thunk": false, "is_external": false}
+            ],
+            "control_flow": {
+                "instruction_count": 87,
+                "branch_count": 12,
+                "call_count": 1,
+                "conditional_branch_count": 8,
+                "return_count": 2,
+                "mnemonic_histogram": {
+                    "mov": 20, "add": 18, "cmp": 8, "jbe": 4, "jae": 2,
+                    "sub": 4, "and": 3, "shr": 2, "ret": 2, "push": 3,
+                    "pop": 3, "lea": 5, "test": 3, "je": 2, "jne": 2,
+                    "call": 1, "xor": 2, "inc": 3
+                }
+            },
+            "decompiler": {
+                "raw_c": "ulong adler32(ulong adler, byte *buf, uint len)\n{\n  ulong s1;\n  ulong s2;\n  uint k;\n  \n  if (buf == (byte *)0x0) {\n    return 1;\n  }\n  s1 = adler & 0xffff;\n  s2 = (adler >> 0x10) & 0xffff;\n  while (len != 0) {\n    if (len < 0x15b0) {\n      k = len;\n    }\n    else {\n      k = 0x15b0;\n    }\n    len = len - k;\n    while (k >= 0x10) {\n      s1 = s1 + (ulong)*buf;\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[1];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[2];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[3];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[4];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[5];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[6];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[7];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[8];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[9];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[10];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[11];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[12];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[13];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[14];\n      s2 = s2 + s1;\n      s1 = s1 + (ulong)buf[15];\n      s2 = s2 + s1;\n      buf = buf + 0x10;\n      k = k - 0x10;\n    }\n    while (k != 0) {\n      s1 = s1 + (ulong)*buf;\n      s2 = s2 + s1;\n      buf = buf + 1;\n      k = k - 1;\n    }\n    s1 = s1 % 0xfff1;\n    s2 = s2 % 0xfff1;\n  }\n  return s2 << 0x10 | s1;\n}",
+                "tokens": ["ulong", "adler32", "adler", "byte", "buf", "uint", "len", "s1", "s2", "k", "0xffff", "0x10", "0x15b0", "0xfff1", "adler32_combine_"]
+            },
+            "referenced_symbols": [
+                {"name": "adler32_combine_", "address": "0x00004100", "type": "Function"}
+            ]
+        },
+        {
+            "address": "0x00004200",
+            "name": "crc32",
+            "size": 458,
+            "is_thunk": false,
+            "is_external": false
+        },
+        {
+            "address": "0x00004800",
+            "name": "inflate",
+            "size": 3200,
+            "is_thunk": false,
+            "is_external": false
+        },
+        {
+            "address": "0x00005c00",
+            "name": "inflate_fast",
+            "size": 1850,
+            "is_thunk": false,
+            "is_external": false
+        },
+        {
+            "address": "0x00006400",
+            "name": "deflate",
+            "size": 2100,
+            "is_thunk": false,
+            "is_external": false
+        },
+        {
+            "address": "0x00007200",
+            "name": "deflateInit2_",
+            "size": 780,
+            "is_thunk": false,
+            "is_external": false
+        },
+        {
+            "address": "0x00007800",
+            "name": "compress2",
+            "size": 210,
+            "is_thunk": false,
+            "is_external": false
+        },
+        {
+            "address": "0x00007a00",
+            "name": "uncompress",
+            "size": 240,
+            "is_thunk": false,
+            "is_external": false
+        },
+        {
+            "address": "0x00008000",
+            "name": "inflateInit2_",
+            "size": 620,
+            "is_thunk": false,
+            "is_external": false
+        },
+        {
+            "address": "0x00008600",
+            "name": "inflateEnd",
+            "size": 120,
+            "is_thunk": false,
+            "is_external": false
+        }
+    ]
+}
